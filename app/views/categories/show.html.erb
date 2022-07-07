@@ -1,0 +1,8 @@
+<% provide :page_title, 'Category' %>
+<% curently_at 'Category' %>
+
+<h1 class="mb-4"><%= @category.title %></h1>
+
+<%= link_to 'Show', category_path(@category.id), class: 'btn btn-primary btn-sm' %> |
+<%= link_to 'Edit', edit_category_path(@category.id), class: 'btn btn-secondary btn-sm' %> |
+<%= link_to 'Delete', category_path(@category.id), class: 'btn btn-danger btn-sm', data: {method: :delete, confirm: 'Are you sure?'} %>

@@ -1,0 +1,18 @@
+<% provide :page_title, 'Category' %>
+<% curently_at 'Category' %>
+
+<h1 class="mb-4">Categories</h1>
+
+<%= link_to 'New category', new_category_path, class: 'btn btn-primary' %>
+
+<% @categories.each do |category| %>
+  <article class="card mt-3">
+    <div class="card-body">
+      <h2><%= category.title %></h2>
+    
+      <%= link_to 'Show', category_path(category.id), class: 'btn btn-primary btn-sm' %> |
+      <%= link_to 'Edit', edit_category_path(category.id), class: 'btn btn-secondary btn-sm' %> |
+      <%= link_to 'Delete', category_path(category.id), class: 'btn btn-danger btn-sm', data: {method: :delete, confirm: 'Are you sure?'} %>
+    </div>
+  </article>
+<% end %>
