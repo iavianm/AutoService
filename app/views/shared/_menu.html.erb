@@ -5,8 +5,8 @@
         <ul class="nav col-12 col-lg-auto mb-2 justify-content-center mb-md-0">
           <li><%= nav_tab 'Home', root_path, class: 'nav-link px-2', current_page: current_page %></li>
           <li><%= nav_tab 'Category', categories_path, class: 'nav-link px-2', current_page: current_page %></li>
+          <li><%= nav_tab 'Cart', cart_path(@cart), class: 'nav-link px-2', current_page: current_page%></li>
         </ul>
       </nav>
-    </div>
   </header>
 <% end %>

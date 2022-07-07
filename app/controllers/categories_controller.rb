@@ -1,4 +1,6 @@
 class CategoriesController < ApplicationController
+  include CurrentCart
+  before_action :set_cart
   before_action :set_category, only: %i[ show edit update destroy ]
 
   def index
