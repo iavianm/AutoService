@@ -6,6 +6,8 @@ class CategoriesController < ApplicationController
   end
 
   def show
+    @service = @category.services.build
+    @services = @category.services.order created_at: :desc
   end
 
   def new
