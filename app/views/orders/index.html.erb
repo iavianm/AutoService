@@ -2,62 +2,66 @@
 
 <h1>Orders</h1>
 
-
-<%= link_to 'Download zipped XLSX', orders_path(format: :xlsx), class: 'btn btn-secondary' %>
-
 <%= search_form_for @search do |f| %>
-  <%= f.condition_fields do |c| %>
-    <%= render 'condition_fields', f: c %>
-  <% end %>
-  <div class="field">
-    Sort:
-    <%= f.sort_fields do |s| %>
-      <%= s.sort_select %>
-    <% end %>
-
-  </div>
-  <div class="actions"><%= f.submit 'Search' %></div>
+<div class="container">
+  <div class="row align-items-start">
+    <div class="col">
+      <div><%= f.label 'Filter by Name' %></div>
+      <%= f.search_field :name_cont %>
+      <%= f.submit 'Filter', data: {disable_with: false} %>
+    </div>
+    <div class="col">
+      <div><%= f.label 'Filter by Email' %></div>
+      <%= f.search_field :email_cont %>
+      <%= f.submit 'Filter', data: {disable_with: false} %>
+    </div>
+    <div class="col">
+      <div><%= f.label 'Filter by Pay type' %></div>
+      <%= f.search_field :pay_type_cont %>
+      <%= f.submit 'Filter', data: {disable_with: false} %>
+    </div>
+    <div class="col">
+      <div><%= f.label 'Filter by Category' %></div>
+      <%= f.search_field :categories_title_cont %>
+      <%= f.submit 'Filter', data: {disable_with: false} %>
+    </div>
+    <div class="col">
+      <div><%= f.label 'Filter by Service' %></div>
+      <%= f.search_field :services_title_cont %>
+      <%= f.submit 'Filter', data: {disable_with: false} %>
+    </div>
+  </div> 
+<div class="actions"><%= f.submit 'Save as XSLX',  formaction: orders_path(format: :xlsx), class: 'btn btn-secondary', data: {disable_with: false} %></div> 
+</div>
+  
 <% end %>
 
-
-<%= @sql %>
-
-<%= @q.each do |g| %>
-<%g%>
-<%end%>
-
-
-<table>
-  <thead>
-    <tr>
-      <th><%= sort_link @search, :name, 'Name' %></th>
-      <th><%= sort_link @search, :email, 'Email' %></th>
-      <th><%= sort_link @search, :pay_type, 'Pay_type' %></th>
-      <th><%= sort_link @search, :categories, 'Categories' %></th>
-      <th colspan="5"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    
-    <% @orders.each do |order| %>
+<table class="table">
+    <thead>
       <tr>
-        <td><%= order.name %></td>
-        <td><%= order.email %></td>
-        <td><%= order.pay_type %></td>
-        
-        
-    
-        
-        
-        <td><%= link_to 'Show', order %></td>
-        <td><%= link_to 'Edit', edit_order_path(order) %></td>
-        <td><%= link_to 'Destroy', order, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th scope="col"><%= sort_link @search, :id, '#' %></th>
+        <th scope="col"><%= sort_link @search, :name, 'Name' %></th>
+        <th scope="col"><%= sort_link @search, :email, 'Email' %></th>
+        <th scope="col"><%= sort_link @search, :pay_type, 'Pay_type' %></th>
+        <th scope="col"><%= sort_link @search, :categories_title, 'Category' %></th>
+        <th scope="col"><%= sort_link @search, :services_title, 'Service' %></th>
       </tr>
-    <% end %>
-  </tbody>
+    </thead>
+
+    <tbody>
+      <tr>
+        <% @orders.each do |order| %>
+          <th scope="row"><%= order.id %></th>
+          <td><%= order.name %></td>
+          <td><%= order.email %></td>
+          <td><%= order.pay_type %></td>
+          <td><%= order.categories.first.title %></td>
+          <td><%= order.services.first.title %></td>
+      </tr>
+    </tbody>
+  <% end %>
 </table>
 
 <br>
 
-<%= link_to 'New Order', new_order_path %>
+<%= link_to 'Back', root_path, class: 'btn btn-secondary btn-sm' %>

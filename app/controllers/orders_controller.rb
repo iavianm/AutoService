@@ -5,34 +5,11 @@ class OrdersController < ApplicationController
   before_action :set_order, only: %i[ show edit update destroy ]
   
   def index
-    # @email = Order.pluck(:email)
-    # sql = SELECT orders.name, services.title, categories.title FROM orders INNER JOIN line_items ON line_items.order_id = orders.ROWID INNER JOIN services ON line_items.service_id = services.ROWID INNER JOIN categories ON services.category_id = categories.ROWID;
-    @sql = ("SELECT orders.name, services.title, categories.title FROM orders" "INNER JOIN line_items ON line_items.order_id = orders.ROWID" "INNER JOIN services ON line_items.service_id = services.ROWID" "INNER JOIN categories ON services.category_id = categories.ROWID")
-    # @search = SELECT orders.name, services.title, categories.title FROM orders INNER JOIN line_items ON line_items.order_id = orders.ROWID INNER JOIN services ON line_items.service_id = services.ROWID INNER JOIN categories ON services.category_id = categories.ROWID;
-    @search = Order.all.ransack(params[:q])
-    
-    @q = [1,2]
     # binding.pry
-      # @search = Order.joins(:line_items).joins(:services, :categories).ransack(params[:q])
-    @orders = @search.result
-    @search.build_condition if @search.conditions.empty?
-    @search.build_sort if @search.sorts.empty?
+    @search = Order.ransack(params[:q])
+    @orders = @search.result(distinct: true)
 
-
-    # min_rating = 5
-    # sql = Boroda.build do
-    #   from :posts => :p
-    #   left join :comments => :c
-    #   on c.post_id == p.id
-    #   select p.id, p.title, p.content, c.id.count => :comment_count
-    #   group by p.id
-    #   where (p.title.like '%programming%') | # Выбираем все посты, содержащие в заголовке 'programming'
-    #         (p.rating > min_rating) # Или с рейтингом больше 5-ти
-    #   order by p.created_at.desc
-    #   limit 10
-    #   offset 20
-    # end
-
+    # @search.build_condition
 
     respond_to do |format|
       format.html

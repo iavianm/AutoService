@@ -1,6 +1,8 @@
 wb = xlsx_package.workbook
 wb.add_worksheet(name: "Orders") do |sheet|
+  sheet.add_row ['name', 'email', 'pay_type', 'categories', 'services']
+  sheet.add_row
   @orders.each do |order|
-    sheet.add_row [order.name, order.email, order.pay_type]
+    sheet.add_row [order.name, order.email, order.pay_type, OrdersHelper.category(order), OrdersHelper.service(order)]
   end
 end
