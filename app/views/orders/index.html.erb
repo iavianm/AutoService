@@ -1,0 +1,63 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Orders</h1>
+
+
+<%= link_to 'Download zipped XLSX', orders_path(format: :xlsx), class: 'btn btn-secondary' %>
+
+<%= search_form_for @search do |f| %>
+  <%= f.condition_fields do |c| %>
+    <%= render 'condition_fields', f: c %>
+  <% end %>
+  <div class="field">
+    Sort:
+    <%= f.sort_fields do |s| %>
+      <%= s.sort_select %>
+    <% end %>
+
+  </div>
+  <div class="actions"><%= f.submit 'Search' %></div>
+<% end %>
+
+
+<%= @sql %>
+
+<%= @q.each do |g| %>
+<%g%>
+<%end%>
+
+
+<table>
+  <thead>
+    <tr>
+      <th><%= sort_link @search, :name, 'Name' %></th>
+      <th><%= sort_link @search, :email, 'Email' %></th>
+      <th><%= sort_link @search, :pay_type, 'Pay_type' %></th>
+      <th><%= sort_link @search, :categories, 'Categories' %></th>
+      <th colspan="5"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    
+    <% @orders.each do |order| %>
+      <tr>
+        <td><%= order.name %></td>
+        <td><%= order.email %></td>
+        <td><%= order.pay_type %></td>
+        
+        
+    
+        
+        
+        <td><%= link_to 'Show', order %></td>
+        <td><%= link_to 'Edit', edit_order_path(order) %></td>
+        <td><%= link_to 'Destroy', order, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Order', new_order_path %>

@@ -1,8 +1,8 @@
 class CreateLineItems < ActiveRecord::Migration[6.1]
   def change
     create_table :line_items do |t|
-      t.references :service, null: false, foreign_key: true
-      t.belongs_to :cart, null: false, foreign_key: true
+      t.references :service, foreign_key: true
+      t.belongs_to :cart, foreign_key: true
 
       t.timestamps
     end
